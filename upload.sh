@@ -16,13 +16,11 @@ BOT_BUILD_URL="https://api.telegram.org/bot${BOT_TOKEN}/sendDocument"
 # Validate file
 if [[ ! -f "$FILE" ]]; then
     echo "ERROR: File not found: $FILE"
-    exit 1
 fi
 
 # Check jq
 command -v jq >/dev/null || {
     echo "ERROR: jq not installed. Install via: sudo apt install jq"
-    exit 1
 }
 
 FILESIZE=$(du -sh "$FILE" | cut -f1)
@@ -51,7 +49,6 @@ if [[ "${#SERVERS[@]}" -eq 0 ]]; then
         -d text="⚠️ *Upload Aborted*
 📁 File: \`$FILE\`
 ❌ Could not resolve any GoFile server." > /dev/null
-    exit 1
 fi
 
 echo "📡 Found ${#SERVERS[@]} servers: ${SERVERS[*]}"
@@ -97,7 +94,6 @@ if [[ $SUCCESS -eq 0 ]]; then
         -d text="🚫 *Upload Failed*
 📁 File: \`$FILE\`
 ❌ All GoFile servers failed." > /dev/null
-    exit 1
 fi
 
 echo
